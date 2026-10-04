@@ -1,0 +1,46 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Kotlin / KMP
+*.class
+*.jar
+*.klib
+local.properties
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+local.properties
+android/.gradle/
+
+# iOS / Xcode
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM/
+
+# Windows / MSVC
+*.pdb
+*.ilk
+*.exe.manifest
+
+# Compose Desktop
+compose.desktop/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.DS_Store
+
+# SQLDelight
+*.db
+*.db-shm
+*.db-wal

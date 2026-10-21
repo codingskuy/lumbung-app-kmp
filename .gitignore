@@ -44,3 +44,6 @@ compose.desktop/
 *.db
 *.db-shm
 *.db-wal
+
+# Graphify (artefak lokal)
+graphify-out/

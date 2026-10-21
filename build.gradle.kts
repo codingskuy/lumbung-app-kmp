@@ -15,5 +15,6 @@ tasks.register("uji") {
     description = "Menjalankan uji unit, gerbang cakupan, dan pemeriksaan dependensi shared-core."
     dependsOn(":shared-core:jvmTest", ":shared-core:koverVerify", ":shared-core:periksaDependensi",
         ":shared-local:jvmTest", ":shared-local:koverVerify",
-        ":gudang-desktop:test")
+        ":gudang-desktop:test",
+        ":lapangan-mobile:jvmTest")
 }

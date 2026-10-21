@@ -21,5 +21,7 @@ include(":shared-core")
 include(":shared-local")
 // Gudang desktop Windows (Compose Desktop, JVM): timbang ganda, sortir, label, surat jalan (LMB-KMP-004).
 include(":gudang-desktop")
+// Mobile lapangan Android/iOS (KMP library: sopir #5, petani #6); shell aplikasi menyusul.
+include(":lapangan-mobile")
 // Modul aplikasi (composeApp, gudang-desktop, lapangan-mobile) ditambahkan di tiket LMB-KMP-003..006
 // saat direktori dan build file-nya dibuat.

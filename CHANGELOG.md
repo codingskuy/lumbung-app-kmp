@@ -4,6 +4,9 @@ Semua perubahan penting lumbung-app-kmp dicatat di sini. Format mengikuti Keep a
 
 ## [Belum dirilis]
 
+### Diubah
+- `StatusPembayaran` menjadi MENUNGGU/DIBAYAR/TERLAMBAT (sesuai kontrak backend); `PapanHarga.hargaGrade` dan `PembayaranPetani` menambah aturan Grade B 85% papan, Grade C ditolak (BRD BR-002).
+
 ### Ditambahkan
 - Modul `gudang-desktop` (LMB-KMP-004, kerangka): timbang ganda, label BR-105, kunci PIN 3x/15 menit, token shift 12 jam, klien `POST /gudang/masuk|keluar`, kerangka 7 layar Compose Desktop dengan bilah Online/Offline + antrean.
 - Modul `shared-local` (LMB-KMP-003): skema SQLDelight (outbox FIFO, lot, nomor_map, meta), `Outbox` (retry 1/5/15 menit, batas 200, foto menunggu WiFi), `TulisLokal` (tulis lokal + antre satu transaksi, catch-up TMP->resmi maks 200, kunci offline >3x24 jam).

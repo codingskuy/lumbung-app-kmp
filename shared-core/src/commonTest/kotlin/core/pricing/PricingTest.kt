@@ -1,5 +1,6 @@
 package core.pricing
 
+import core.model.Grade
 import core.model.Zona
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -68,5 +69,40 @@ class PapanHargaTest {
 
     @Test fun referensiHarusTigaTepat() {
         assertFailsWith<IllegalArgumentException> { PapanHarga.median(listOf(1, 2)) }
+    }
+}
+
+class HargaGradeTest {
+    @Test fun gradeBAdalah85PersenDibulatkan500KeBawah() {
+        assertEquals(26_500L, PapanHarga.hargaGrade(31_500, Grade.B))
+        assertEquals(23_500L, PapanHarga.hargaGrade(28_000, Grade.B))
+        assertEquals(5_000L, PapanHarga.hargaGrade(6_000, Grade.B))
+    }
+
+    @Test fun gradeA100PersenGradeCDitolak() {
+        assertEquals(31_500L, PapanHarga.hargaGrade(31_500, Grade.A))
+        assertEquals(0L, PapanHarga.hargaGrade(31_500, Grade.C))
+    }
+
+    @Test fun hargaNegatifDitolak() {
+        assertFailsWith<IllegalArgumentException> { PapanHarga.hargaGrade(-1, Grade.A) }
+    }
+
+    @Test fun nilaiBayarPetani() {
+        // L-8812: A 100 kg @31.500, B 14 kg @26.500, C 6 kg ditolak.
+        assertEquals(3_150_000L, PembayaranPetani.nilai(100_000, 31_500, Grade.A))
+        assertEquals(371_000L, PembayaranPetani.nilai(14_000, 31_500, Grade.B))
+        assertEquals(0L, PembayaranPetani.nilai(6_000, 31_500, Grade.C))
+        assertEquals(26_500L, PembayaranPetani.nilai(1_000, 31_500, Grade.B))
+        assertEquals(0L, PembayaranPetani.nilai(0, 31_500, Grade.A))
+    }
+
+    @Test fun beratNegatifDitolak() {
+        assertFailsWith<IllegalArgumentException> { PembayaranPetani.nilai(-1, 1, Grade.A) }
+    }
+
+    @Test fun beratSelaluGramBulat() {
+        // Tipe Long: tidak ada pecahan gram; 1 gram x Rp31.500/kg = Rp31 (dibulatkan ke bawah).
+        assertEquals(31L, PembayaranPetani.nilai(1, 31_500, Grade.A))
     }
 }

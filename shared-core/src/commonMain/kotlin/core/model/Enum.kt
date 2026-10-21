@@ -31,8 +31,8 @@ public enum class StatusTrip { DISUSUN, BERJALAN, SELESAI }
 public enum class RuteTrip { UTARA, SELATAN, KOTA }
 
 /**
- * Status pembayaran petani H+1.
- * ASUMSI: nilai enum tidak dibakukan di FSD/20 (hanya "Pembayaran H+1"); diturunkan dari BR-104.
+ * Status pembayaran petani H+1. Nilai mengikuti kontrak backend (openapi `Pembayaran.status`)
+ * dan keputusan produk: MENUNGGU, DIBAYAR, TERLAMBAT.
  */
 @Serializable
-public enum class StatusPembayaran { MENUNGGU, LUNAS, TELAT }
+public enum class StatusPembayaran { MENUNGGU, DIBAYAR, TERLAMBAT }

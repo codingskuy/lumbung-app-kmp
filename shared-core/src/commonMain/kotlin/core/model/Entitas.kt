@@ -11,6 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class Jejak(
     val uuid: String,
+    @Serializable(with = InstantIso::class)
     val dibuatPada: Instant,
     /** Offset zona waktu lokal saat rekaman dibuat, dalam detik dari UTC (WIB = 25200). */
     val offsetDetik: Int,

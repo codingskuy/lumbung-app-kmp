@@ -7,12 +7,18 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
 }
 
-kotlin { jvmToolchain(17) }
+kotlin {
+    jvmToolchain(17)
+    // kotlinx-datetime 0.7 memakai kotlin.time.Instant (eksperimental di Kotlin 2.2).
+    compilerOptions { optIn.add("kotlin.time.ExperimentalTime") }
+}
 
 dependencies {
     implementation(project(":shared-core"))
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
+    implementation(libs.navigation3.runtime)
+    implementation(libs.navigation3.ui)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)

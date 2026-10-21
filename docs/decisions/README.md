@@ -13,3 +13,4 @@ Keputusan arsitektur repo ini dicatat sebagai ADR.
 ## Daftar
 
 - [ADR-0001 — Fondasi teknis](./ADR-0001-fondasi-teknis.md)
+- [ADR-0002 — Keputusan produk siklus 1 dan penguncian Navigation3](./ADR-0002-keputusan-produk-dan-navigation3.md)

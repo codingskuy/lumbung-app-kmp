@@ -27,8 +27,11 @@ class ModelTest {
         bolakBalik(Keranjang(jejak, "KRJ-041", "l", Grade.A, 20_000))
         bolakBalik(Trip(jejak, "TRIP-UT-041", RuteTrip.UTARA, "L300", 300_000))
         bolakBalik(Pesanan(jejak, "PSO-20261010-014", "Pawon", Zona.DEKAT, listOf(ItemPesanan(Komoditas.CABAI, Grade.A, 100_000)), 150_000))
-        bolakBalik(Pembayaran(jejak, "r", 3_200_000, tgl, StatusPembayaran.MENUNGGU))
+        bolakBalik(Pembayaran(jejak, "r", 3_200_000, tgl, StatusPembayaran.DIBAYAR))
     }
+
+    @Test fun statusPembayaranSesuaiKontrak() =
+        assertEquals(listOf("MENUNGGU", "DIBAYAR", "TERLAMBAT"), StatusPembayaran.entries.map { it.name })
 
     @Test fun totalSortir() = assertEquals(120_000L, Sortir(jejak, "l", 100_000, 14_000, 6_000, "OPR").totalG)
 

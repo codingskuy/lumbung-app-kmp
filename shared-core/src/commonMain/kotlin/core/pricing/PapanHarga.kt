@@ -1,5 +1,7 @@
 package core.pricing
 
+import core.model.Grade
+
 /**
  * Papan harga mingguan (BRD/30 BR-305): median 3 referensi dikurangi 10%,
  * dibulatkan ke bawah kelipatan Rp500. Pure, tanpa I/O.
@@ -22,4 +24,20 @@ public object PapanHarga {
     }
 
     public fun hitungDariReferensi(referensi: List<Long>): Long = hitung(median(referensi))
+
+    /** Persen harga papan yang diterima petani untuk Grade B (BRD BR-002 beku: A 100%, B 85%, C ditolak). */
+    public const val PERSEN_GRADE_B: Long = 85L
+
+    /**
+     * Harga papan per kg untuk [grade] dari harga Grade A ([hargaA]): A = 100%, B = 85% dibulatkan ke bawah
+     * kelipatan Rp500, C = 0 (ditolak). Contoh: A 31.500 -> B 26.500; A 28.000 -> B 23.500; A 6.000 -> B 5.000.
+     */
+    public fun hargaGrade(hargaA: Long, grade: Grade): Long {
+        require(hargaA >= 0) { "hargaA tidak boleh negatif" }
+        return when (grade) {
+            Grade.A -> hargaA
+            Grade.B -> hargaA * PERSEN_GRADE_B / 100L / KELIPATAN_RUPIAH * KELIPATAN_RUPIAH
+            Grade.C -> 0L
+        }
+    }
 }

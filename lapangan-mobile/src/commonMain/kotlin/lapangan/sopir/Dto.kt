@@ -1,5 +1,6 @@
 package lapangan.sopir
 
+import core.model.InstantIso
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,8 +11,8 @@ data class Titik(
     val id: String,
     val urutan: Int,
     val zona: String? = null,
-    @SerialName("tiba_pada") val tibaPada: Instant? = null,
-    @SerialName("berangkat_pada") val berangkatPada: Instant? = null,
+    @SerialName("tiba_pada") @Serializable(with = InstantIso::class) val tibaPada: Instant? = null,
+    @SerialName("berangkat_pada") @Serializable(with = InstantIso::class) val berangkatPada: Instant? = null,
 )
 
 @Serializable
@@ -34,7 +35,7 @@ data class TitikTibaRequest(
     val uuid: String,
     @SerialName("trip_id") val tripId: String,
     @SerialName("titik_id") val titikId: String,
-    val waktu: Instant,
+    @Serializable(with = InstantIso::class) val waktu: Instant,
     val lat: Double? = null,
     val lng: Double? = null,
 )
@@ -44,7 +45,7 @@ data class BuktiTerimaRequest(
     val uuid: String,
     @SerialName("trip_id") val tripId: String,
     @SerialName("titik_id") val titikId: String,
-    val waktu: Instant,
+    @Serializable(with = InstantIso::class) val waktu: Instant,
     @SerialName("foto_ids") val fotoIds: List<String>,
     @SerialName("tanda_tangan") val tandaTangan: String? = null,
     val catatan: String? = null,

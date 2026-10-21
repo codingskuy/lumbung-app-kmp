@@ -8,6 +8,8 @@ plugins {
 
 kotlin {
     jvmToolchain(17)
+    // kotlinx-datetime 0.7 memakai kotlin.time.Instant (eksperimental di Kotlin 2.2).
+    compilerOptions { optIn.add("kotlin.time.ExperimentalTime") }
 
     jvm()
     androidTarget()
@@ -21,6 +23,8 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(libs.navigation3.runtime)
+            implementation(libs.navigation3.ui)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)

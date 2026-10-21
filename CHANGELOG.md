@@ -4,6 +4,9 @@ Semua perubahan penting lumbung-app-kmp dicatat di sini. Format mengikuti Keep a
 
 ## [Belum dirilis]
 
+### Diubah
+- `StatusPembayaran` menjadi MENUNGGU/DIBAYAR/TERLAMBAT (sesuai kontrak backend); `PapanHarga.hargaGrade` dan `PembayaranPetani` menambah aturan Grade B 85% papan, Grade C ditolak (BRD BR-002).
+
 ### Ditambahkan
 - Modul `shared-local` (LMB-KMP-003): skema SQLDelight (outbox FIFO, lot, nomor_map, meta), `Outbox` (retry 1/5/15 menit, batas 200, foto menunggu WiFi), `TulisLokal` (tulis lokal + antre satu transaksi, catch-up TMP->resmi maks 200, kunci offline >3x24 jam).
 - Modul `shared-core` (LMB-KMP-002): `core.model` (8 entitas + enum), `core.pricing` (`FeeCalculator`, `PapanHarga`), `core.grading` (`AturanGrade`, `ValidasiSortir` +-2%), `core.sync` (UUID v4, nomor TMP, kebijakan retry/offline), `core.nav` (`Route`); bootstrap Gradle wrapper 8.14.3, Kover gerbang 85%, tugas `./gradlew uji`.

@@ -1,0 +1,34 @@
+-- Antrean outbox FIFO: urutan ditentukan kolom seq (autoincrement), bukan waktu.
+CREATE TABLE outbox (
+    seq INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT NOT NULL UNIQUE,
+    jenis TEXT NOT NULL,
+    payload TEXT NOT NULL,
+    ukuran_byte INTEGER NOT NULL,
+    adalah_foto INTEGER NOT NULL DEFAULT 0,
+    dibuat_pada_ms INTEGER NOT NULL,
+    percobaan INTEGER NOT NULL DEFAULT 0,
+    jadwal_berikut_ms INTEGER NOT NULL
+);
+
+tambah:
+INSERT INTO outbox(id, jenis, payload, ukuran_byte, adalah_foto, dibuat_pada_ms, percobaan, jadwal_berikut_ms)
+VALUES (?, ?, ?, ?, ?, ?, 0, ?);
+
+semua:
+SELECT * FROM outbox ORDER BY seq ASC;
+
+jumlah:
+SELECT COUNT(*) FROM outbox;
+
+ukuranFoto:
+SELECT COALESCE(SUM(ukuran_byte), 0) FROM outbox WHERE adalah_foto = 1;
+
+hapus:
+DELETE FROM outbox WHERE id = ?;
+
+gagal:
+UPDATE outbox SET percobaan = percobaan + 1, jadwal_berikut_ms = ? WHERE id = ?;
+
+ambil:
+SELECT * FROM outbox WHERE id = ?;

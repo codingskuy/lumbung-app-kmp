@@ -8,6 +8,8 @@ plugins {
 kotlin {
     explicitApi()
     jvmToolchain(17)
+    // kotlinx-datetime 0.7 memakai kotlin.time.Instant (eksperimental di Kotlin 2.2).
+    compilerOptions { optIn.add("kotlin.time.ExperimentalTime") }
 
     jvm()
     androidTarget()

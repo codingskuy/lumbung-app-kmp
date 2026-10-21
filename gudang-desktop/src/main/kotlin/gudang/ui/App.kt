@@ -9,13 +9,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import core.nav.Route
 import gudang.logika.BilahStatus
 
@@ -31,18 +31,39 @@ internal enum class LayarGudang(val judul: String, val tag: String, val rute: Ro
 }
 
 @Composable
+private fun IsiLayar(layar: LayarGudang) {
+    Text(layar.judul, Modifier.testTag("layar-${layar.tag}"))
+}
+
+/** Navigation3: back stack berisi [Route] dari shared-core; tiap rute dipetakan ke layarnya lewat entryProvider. */
+@Composable
 internal fun AppGudang(online: Boolean = false, antrean: Int = 0) {
-    var layar by remember { mutableStateOf(LayarGudang.DASBOR) }
+    val backStack = remember { mutableStateListOf<Route>(Route.DasborHariIni) }
     MaterialTheme {
         Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             // Bilah atas selalu tampil.
             Text(BilahStatus.teks(online, antrean), Modifier.testTag("bilah-status"))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 LayarGudang.entries.forEach { l ->
-                    Button(onClick = { layar = l }, modifier = Modifier.testTag("nav-${l.tag}")) { Text(l.judul) }
+                    Button(
+                        onClick = { backStack.clear(); backStack.add(l.rute) },
+                        modifier = Modifier.testTag("nav-${l.tag}"),
+                    ) { Text(l.judul) }
                 }
             }
-            Text(layar.judul, Modifier.testTag("layar-${layar.tag}"))
+            NavDisplay(
+                backStack = backStack,
+                onBack = { if (backStack.size > 1) backStack.removeAt(backStack.lastIndex) },
+                entryProvider = entryProvider {
+                    entry<Route.DasborHariIni> { IsiLayar(LayarGudang.DASBOR) }
+                    entry<Route.TimbangLot> { IsiLayar(LayarGudang.TIMBANG) }
+                    entry<Route.HasilSortir> { IsiLayar(LayarGudang.SORTIR) }
+                    entry<Route.CetakLabel> { IsiLayar(LayarGudang.LABEL) }
+                    entry<Route.SusunTrip> { IsiLayar(LayarGudang.TRIP) }
+                    entry<Route.CetakSuratJalan> { IsiLayar(LayarGudang.SURAT_JALAN) }
+                    entry<Route.ArsipKontrak> { IsiLayar(LayarGudang.ARSIP) }
+                },
+            )
         }
     }
 }

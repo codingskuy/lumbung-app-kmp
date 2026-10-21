@@ -15,9 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "lumbung-app-kmp"
 
-// Modul aplikasi bersama (Compose Multiplatform + Navigation3).
-include(":composeApp")
-// Modul gudang desktop Windows: USB/serial timbangan + printer thermal.
-include(":gudang-desktop")
-// Modul lapangan mobile Android/iOS: panen, lot, trip.
-include(":lapangan-mobile")
+// Logika bisnis bersama (fee, grading, sinkron, rute). Hanya stdlib + kotlinx-datetime + kotlinx-serialization.
+include(":shared-core")
+// Modul aplikasi (composeApp, gudang-desktop, lapangan-mobile) ditambahkan di tiket LMB-KMP-003..006
+// saat direktori dan build file-nya dibuat.
